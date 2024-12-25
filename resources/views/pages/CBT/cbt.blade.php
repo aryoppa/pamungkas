@@ -29,6 +29,13 @@
                     </button>
                 </a>
             </div>
+            <div class="col-4">
+                <a href="{{ Auth::check() ? url('irt/result') : url('demo/cbt/test-page') }}">
+                    <button type="button" class="btn ps-4 pe-4 text-light fw-bold" style="background-color: #5E7B87;">
+                        Lihat Rekomendasi Terakhir
+                    </button>
+                </a>
+            </div>
         </div>
     </div>
 </div>

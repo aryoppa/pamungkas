@@ -7,8 +7,8 @@
             Rekomendasi
         </h2>
 
-        <p class="text-dark text-center" style="font-size: 18px; line-height: 1.6;">
-            {{ $rekomendasi['recommendation'] }}
+        <p class="text-dark text-center" style="font-size: 20px; line-height: 2;">
+            {!! preg_replace('/\\./', '.<br>', $rekomendasi['recommendation'], 1) !!}
         </p>
     </div>
 </div>
