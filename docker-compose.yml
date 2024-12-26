@@ -1,0 +1,59 @@
+networks:
+  laravel:
+    driver: bridge
+
+services:
+  web:
+    image: app-name:latest
+    build:
+      target: web
+      context: .
+    env_file:
+      - .env
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+    #  - npm
+    networks:
+      - laravel
+
+  #npm:
+  #  image: node:lts
+  #  container_name: npm
+  #  volumes:
+  #    - .:/var/www/html
+  #  working_dir: /var/www/html
+  #  ports:
+  #    - "5173:5173" # Expose Vite dev server
+  #  command: ["npm", "run", "dev", "--", "--host=0.0.0.0", "--port=5173"] # Ensure Vite binds to all interfaces
+  #  networks:
+  #    - laravel
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - laravel
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - "9191:80"
+    environment:
+      PMA_HOST: mysql
+    networks:
+      - laravel
